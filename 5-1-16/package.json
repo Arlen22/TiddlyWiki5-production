@@ -1,6 +1,6 @@
 {
-  "name": "tiddlywiki",
-  "preferGlobal": "true",
+  "name": "tiddlywiki-compiled",
+  "preferGlobal": true,
   "version": "5.1.16",
   "author": "Jeremy Ruston <jeremy@jermolene.com>",
   "description": "a non-linear personal web notebook",

@@ -17,12 +17,15 @@ function obs_mkdir(tag) {
     return Observable.bindCallback(fs.mkdir, (err, data) => [err, data, tag]);
 }
 
-var $tw = require("tiddlywiki").TiddlyWiki();
+
 
 // const TWSource = 'TiddlyWiki5-54b1e284fa323968b6d8e49ad5c2344627d8ce3b';
-const TWSource = 'TiddlyWiki5-5.1.17';
+const TWSource = './Source/TiddlyWiki5-5.1.17';
+var $tw = require(TWSource).TiddlyWiki();
 const oldFolder = path.join(__dirname, TWSource);
-const newFolder = path.join(__dirname, TWSource + "-Compiled");
+const newFolder = path.join(__dirname, TWSource + "-test");
+if (fs.existsSync(newFolder))
+    fs.rmdirSync(newFolder);
 fs.mkdirSync(newFolder);
 $tw.boot.argv = [TWSource + '/editions/empty'];
 
@@ -33,7 +36,7 @@ $tw.boot.executeNextStartupTask = function () {
 }
 $tw.boot.boot();
 function complete() {
-    require('./boot-node-5-1-14').bootNode($tw);
+    require('./boot-node-async').bootNode($tw);
     Observable.from(['plugins', 'themes']).concatMap(folder => {
         const fullpath = path.join(__dirname, TWSource, folder);
         return obs_readdir(fullpath)(fullpath);
