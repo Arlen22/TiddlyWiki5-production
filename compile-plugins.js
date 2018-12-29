@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+//compiles plugins as JSON header plus plain text body
+
 const version = process.argv[3]; 'http-server';
 // const TWSource = 'Source/TiddlyWiki5-' + version.split('-').join('.');
 const TWSource = process.argv[2]; //'Source/http-server';
@@ -34,17 +36,17 @@ function complete() {
 				const curPath = path.join(newFolder, splitPath.slice(0, i + 1).join(path.sep));
 				if (!fs.existsSync(curPath)) fs.mkdirSync(curPath);
 			}
-			// if (plugin) {
-			// 	plugin.tiddlers = JSON.parse(plugin.text).tiddlers;
-			// 	delete plugin.text;
-			// 	fs.writeFileSync(path.join(newPath, "plugin.info"), JSON.stringify(plugin));
-			// } else console.log(oldpath);
 			if (plugin) {
-				const text = plugin.text;
+				plugin.tiddlers = JSON.parse(plugin.text).tiddlers;
 				delete plugin.text;
-				const meta = JSON.stringify(plugin);
-				fs.writeFileSync(path.join(newPath, "plugin.txt"), meta + "\n\n" + text);
+				fs.writeFileSync(path.join(newPath, "plugin.info"), JSON.stringify(plugin));
 			} else console.log(oldpath);
+			// if (plugin) {
+			// 	const text = plugin.text;
+			// 	delete plugin.text;
+			// 	const meta = JSON.stringify(plugin);
+			// 	fs.writeFileSync(path.join(newPath, "plugin.txt"), meta + "\n\n" + text);
+			// } else console.log(oldpath);
 
 		});
 	fs.mkdirSync(path.join(newFolder, 'boot'));
