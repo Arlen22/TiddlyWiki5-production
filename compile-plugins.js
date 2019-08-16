@@ -8,8 +8,8 @@ const version = process.argv[3]; 'http-server';
 const TWSource = process.argv[2]; //'Source/http-server';
 if (!version || !TWSource) return;
 
-const oldFolder = path.join(__dirname, TWSource);
-const newFolder = path.join(__dirname, version);
+const oldFolder = path.resolve(__dirname, TWSource);
+const newFolder = path.resolve(__dirname, version);
 fs.mkdirSync(newFolder);
 var $tw = require(oldFolder).TiddlyWiki();
 $tw.boot.argv = [TWSource + '/editions/empty'];
