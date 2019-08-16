@@ -21,9 +21,9 @@ $tw.boot.executeNextStartupTask = function () {
 $tw.boot.boot();
 function complete() {
 	var test = ['plugins', 'themes'].map(folder => path.join(oldFolder, folder))
-		.reduce((n, folder) => n.concat(fs.readdirSync(folder).map(sub => path.join(folder, sub))), [])
+		.reduce((n, folder) => n.concat(fs.readdirSync(folder).filter(sub => !sub.startsWith(".")).map(sub => path.join(folder, sub))), [])
 		.concat([path.join(oldFolder, 'languages')])
-		.reduce((n, folder) => n.concat(fs.readdirSync(folder).map(sub => path.join(folder, sub))), [])
+		.reduce((n, folder) => n.concat(fs.readdirSync(folder).filter(sub => !sub.startsWith(".")).map(sub => path.join(folder, sub))), [])
 		.concat([path.join(oldFolder, 'core')])
 		.forEach(oldPath => {
 			const plugin = $tw.loadPluginFolder(oldPath)
