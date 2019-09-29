@@ -16,8 +16,7 @@ const newFolder = path.resolve(__dirname, version);
 
 const pkg = require(path.resolve(oldFolder, "package.json"));
 if(pkg.version.replace(/\./gi, "-") !== version) {
-	console.log("Mismatch with package.json version");
-	return;
+	throw "Mismatch with package.json version";
 }
 
 fs.mkdirSync(newFolder);
