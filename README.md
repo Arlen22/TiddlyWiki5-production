@@ -11,3 +11,13 @@ The files are always served using gzip encoding if the browser supports it and t
 The integrity check for the `plugin.info.js` files in each bundle can be found in the hashes.json file:
 
 https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-compiled@bundle-1/5-1-21/hashes.json
+
+To use the bundle scripts you insert the following HTML betweeen the `boot-prefix.js` script tag and the `boot.js` script tag at the end of the TiddlyWiki file.
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-compiled@bundle-1/5-1-21/core/plugin.info.js" 
+        integrity="sha384-lQRuSGJAQyYns4Xf7SyB4MmxxyMaNk43fXYDmTWAC9hGwtekYLf07ECtgHFXsSwH"
+        crossorigin></script>
+```
+
+The src attribute is the full url of the file you want to load externally and the integrity attribute is the corrosponding hash from the corresponding hash file (in this case `/5-1-21/hashes.json` from tag "bundle-1").
