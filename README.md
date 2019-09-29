@@ -8,6 +8,6 @@ Don't use the jsDelivr .min.js file because then you cannot use the HTML integri
 
 The files are always served using gzip encoding if the browser supports it and this decreases the file size much more than minification could anyway. So don't use minification, just depend on jsDelivr serving the files using gzip. 
 
-The integrity check for each set of bundles can be found in the hashes.json file, such as this one: 
+The integrity check for the `plugin.info.js` files in each bundle can be found in the hashes.json file:
 
 https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-compiled@bundle-1/5-1-21/hashes.json
