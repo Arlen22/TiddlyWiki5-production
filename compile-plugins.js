@@ -49,6 +49,8 @@ function complete() {
 			}
 			if (plugin) {
 				// let js = JSON.stringify(plugin);
+				//re-stringify to reformat and save space
+				plugin.text = JSON.stringify(JSON.parse(plugin.text));
 				let js = Buffer.from(`$tw.preloadTiddler(${JSON.stringify(plugin)});`, "utf8");
 				let hash = crypto.createHash("sha384").update(js).digest("base64");
 				// console.log(newPath, hash);
