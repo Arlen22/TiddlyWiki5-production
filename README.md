@@ -15,9 +15,10 @@ https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-compiled@bundle-1/5-1-21/hashes.
 To use the bundle scripts you insert the following HTML betweeen the `boot-prefix.js` script tag and the `boot.js` script tag at the end of the TiddlyWiki file.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-compiled@bundle-1/5-1-21/core/plugin.info.js" 
-        integrity="sha384-lQRuSGJAQyYns4Xf7SyB4MmxxyMaNk43fXYDmTWAC9hGwtekYLf07ECtgHFXsSwH"
+<script src="https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-compiled@bundle-2/5-1-21/core/plugin.info.js" 
+        integrity="sha384-dcPwpSUiluYnEffNrxFvmzyzQ298Qz63eVxpUSffW3x9noOP6z+IlGzlzlIGJ+tx"
         crossorigin></script>
 ```
 
-The src attribute is the full url of the file you want to load externally and the integrity attribute is the corrosponding hash from the corresponding hash file (in this case `/5-1-21/hashes.json` from tag "bundle-1"). The plugin.info.js file is literally just `$tw.preloadTiddler(/* plugin.info file content */);`
+The src attribute is the full url of the file you want to load externally and the integrity attribute is the corrosponding hash from the corresponding hash file (in this case `/5-1-21/hashes.json` from tag "bundle-1"). The plugin.info.js file is literally just `$tw.preloadTiddler(/* plugin tiddler JSON */);`. The difference between this and plugin.info is that plugin.info parses the text field to save a little bit of space.
+
