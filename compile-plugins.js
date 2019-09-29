@@ -48,14 +48,16 @@ function complete() {
 				if (!fs.existsSync(curPath)) fs.mkdirSync(curPath);
 			}
 			if (plugin) {
-				plugin.tiddlers = JSON.parse(plugin.text).tiddlers;
-				delete plugin.text;
-				fs.writeFileSync(path.join(newPath, "plugin.info"), JSON.stringify(plugin));
+				// let js = JSON.stringify(plugin);
 				let js = Buffer.from(`$tw.preloadTiddler(${JSON.stringify(plugin)});`, "utf8");
 				let hash = crypto.createHash("sha384").update(js).digest("base64");
 				// console.log(newPath, hash);
 				fs.writeFileSync(path.join(newPath, "plugin.info.js"), js);
 				hashes[relPath] = "sha384-" + hash;
+
+				plugin.tiddlers = JSON.parse(plugin.text).tiddlers;
+				delete plugin.text;
+				fs.writeFileSync(path.join(newPath, "plugin.info"), JSON.stringify(plugin));
 			} else console.log(oldPath);
 		});
 	console.log(hashes);
