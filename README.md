@@ -20,4 +20,4 @@ To use the bundle scripts you insert the following HTML betweeen the `boot-prefi
         crossorigin></script>
 ```
 
-The src attribute is the full url of the file you want to load externally and the integrity attribute is the corrosponding hash from the corresponding hash file (in this case `/5-1-21/hashes.json` from tag "bundle-1").
+The src attribute is the full url of the file you want to load externally and the integrity attribute is the corrosponding hash from the corresponding hash file (in this case `/5-1-21/hashes.json` from tag "bundle-1"). The plugin.info.js file is literally just `$tw.preloadTiddler(/* plugin.info file content */);`
