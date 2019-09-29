@@ -9,8 +9,16 @@ const version = process.argv[3]; 'http-server';
 const TWSource = process.argv[2]; //'Source/http-server';
 if (!version || !TWSource) return;
 
+
+
 const oldFolder = path.resolve(__dirname, TWSource);
 const newFolder = path.resolve(__dirname, version);
+
+const pkg = require(path.resolve(oldFolder, "package.json"));
+if(pkg.version.replace(/\./gi, "-") !== version) {
+	console.log("Mismatch with package.json version");
+	return;
+}
 
 fs.mkdirSync(newFolder);
 var $tw = require(oldFolder).TiddlyWiki();
