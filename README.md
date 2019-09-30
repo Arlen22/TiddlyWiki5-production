@@ -21,3 +21,5 @@ To use the bundle scripts you insert the following HTML betweeen the `boot-prefi
 ```
 
 The src attribute is the full url of the file you want to load externally and the integrity attribute is the corrosponding hash from the corresponding hash file (in this case `/5-1-21/hashes.json` from tag "bundle-1"). The plugin.info.js file is literally just `$tw.preloadTiddler(/* plugin tiddler */);`
+
+The latest tag can be found at https://github.com/Arlen22/TiddlyWiki5-compiled/releases/latest
