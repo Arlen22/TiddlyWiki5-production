@@ -1,6 +1,6 @@
 # TiddlyWiki5-compiled
 
-The way this works is really simple. It's powered by jsdelivr.net. Using GitHub tags we can distribute the file hashes for each file and guarentee with certainty that the file will never change. Use the tag identifier after the @ symbol to lock onto a specific file. Each time we publish a new bundle we also add a new tag for it. You can use any tag you want, so that if we ever update any bundles you will not be affected by the change unless you select the new tag. 
+The way this works is really simple. It's powered by jsdelivr.net. Using GitHub tags we can distribute the file hashes for each file and guarentee with certainty that the file will never change. Use the tag identifier after the @ symbol to lock onto a specific file. Each time we publish a new bundle we also add a new tag for it.
 
 https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-compiled@tag1/5-1-21/core/plugin.info.js
 
@@ -32,3 +32,9 @@ You can use the following wikitext to download a copy of your wiki minus the plu
 {{$:/core/ui/Buttons/save-wiki}}
 </$set>
 ```
+
+In order to get the most performance from everyone using the same files, this list will specify which tag should be used for which version. Of course, any tag may contain any particular version, but try to stick with this list since once a bundle is put up here it should never change, so there would be no need to use a newer tag for the same version. 
+
+- 5.1.14 - 5.1.21 (inclusive), use `tag1`
+  -https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-compiled@tag1/5-1-21/hashes.json
+  
