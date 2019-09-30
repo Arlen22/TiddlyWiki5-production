@@ -24,7 +24,7 @@ The src attribute is the full url of the file you want to load externally and th
 
 The latest tag can be found at https://github.com/Arlen22/TiddlyWiki5-compiled/releases/latest
 
-You can use the following wikitext to download a copy of your wiki sans the plugins you want to pull from the CDN (in this example, only `$:/core`). Be sure to include the minus sign in front of each tiddler you want to exclude. This assumes `$:/config/SaveWikiButton/Template` is set to `$:/core/save/all`. 
+You can use the following wikitext to download a copy of your wiki minus the plugins you want to pull from the CDN (in this example, only `$:/core`). Be sure to include the minus sign in front of each tiddler you want to exclude. This assumes `$:/config/SaveWikiButton/Template` is set to `$:/core/save/all`. 
 
 ```plain
 {{$:/config/SaveWikiButton/Template}}
