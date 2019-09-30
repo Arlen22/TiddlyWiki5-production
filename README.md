@@ -1,4 +1,4 @@
-# TiddlyWiki5-compiled
+# TiddlyWiki5-production
 
 The way this works is really simple. It's powered by jsdelivr.net. Using GitHub tags we can distribute the file hashes for each file and guarentee with certainty that the file will never change. Use the tag identifier after the @ symbol to lock onto a specific file. Each time we publish a new bundle we also add a new tag for it.
 
