@@ -12,7 +12,7 @@ The integrity check for the `plugin.info.js` files in each bundle can be found i
 
 https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-compiled@tag1/5-1-21/hashes.json
 
-To use the bundle scripts you insert the following HTML betweeen the `boot-prefix.js` script tag and the `boot.js` script tag at the end of the TiddlyWiki file.
+To use the bundle scripts you insert the following HTML betweeen the `boot-prefix.js` script tag and the `boot.js` script tag at the end of the TiddlyWiki file. You should be able to find the correct place by searching for the string `<!--~~ Boot kernel ~~-->`.
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-compiled@tag1/5-1-21/core/plugin.info.js" 
