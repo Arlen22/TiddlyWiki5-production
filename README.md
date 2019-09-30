@@ -23,3 +23,12 @@ To use the bundle scripts you insert the following HTML betweeen the `boot-prefi
 The src attribute is the full url of the file you want to load externally and the integrity attribute is the corrosponding hash from the corresponding hash file (in this case `/5-1-21/hashes.json` from tag "bundle-1"). The plugin.info.js file is literally just `$tw.preloadTiddler(/* plugin tiddler */);`
 
 The latest tag can be found at https://github.com/Arlen22/TiddlyWiki5-compiled/releases/latest
+
+You can use the following wikitext to download a copy of your wiki without the plugins you want to pull from the CDN (in this example, only `$:/core`). Be sure to include the minus sign in front of each tiddler you want to exclude. This assumes `$:/config/SaveWikiButton/Template` is set to `$:/core/save/all`. 
+
+```plain
+{{$:/config/SaveWikiButton/Template}}
+<$set name="publishFilter" value="-[[$:/core]]">
+{{$:/core/ui/Buttons/save-wiki}}
+</$set>
+```
