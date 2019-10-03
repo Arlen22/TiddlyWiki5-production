@@ -33,7 +33,7 @@ You can use the following wikitext to download a copy of your wiki minus the plu
 </$set>
 ```
 
-In order to get the most performance from everyone using the same files, this list will specify which tag should be used for which version. Of course, any tag may contain any particular version, but try to stick with this list since once a bundle is put up here it should never change, so there would be no need to use a newer tag for the same version. 
+In order to get the most performance from everyone using the same files, this list will specify which tag should be used for which version. Everyone who uses a particular file will share the benefit of caching that file, so it's better to only use one tag for each version. Tags never mutate, and neither do TiddlyWiki versions, so there is never a need to use a newer tag for an older version. 
 
 - 5.1.14 - 5.1.21 (inclusive), use `tag1`
   - https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-production@tag1/5-1-21/hashes.json
