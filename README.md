@@ -49,17 +49,24 @@ The best way to do this is probably to add a plugin to the plugins directory in 
 But if you don't want to use a plugin or a relative data folder, you could use this code which first tries to load the CDN, then loads a local copy (in this case from TiddlyServer's tiddlywiki installation, which requires TiddlyServer 2.1.5). Place this code inside a script tag at the same place as before, then call the load function as shown at the bottom of the script. 
 
 ```js
-  //because this uses the server version number, it will always be identical to the fallback copy when using TiddlyServer
+  //because this uses the server version number, it will always be identical to the fallback
   const VERSION = "`{{$:/core/templates/version}}`".replace(/\./gi, '-');
   $tw.boot.suppressBoot = true;
   let total = 0;
   let finished = 0;
+  const versiontags = {
+    "5-1-14": "tag1",
+    "5-1-15": "tag1",
+    "5-1-16": "tag1",
+    "5-1-17": "tag1",
+    "5-1-18": "tag1",
+    "5-1-19": "tag1",
+    "5-1-20": "tag1",
+    "5-1-21": "tag1",
+  }
   function load(version, path, integrity, fallback){
     total++;
-    //method1 is a branch that I (@arlen22) promise to not change the mechanism for
-    //so it will always have the same content and work the same way
-    //I will also try to add new TiddlyWiki versions to it as quickly as possible
-    let cdn = "https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-production@method1/" + version + "/" + path + "/plugin.info.js";
+    let cdn = "https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-production@" + versiontags[version] || "method1" + "/" + version + "/" + path + "/plugin.info.js";
     let local = "/assets/tiddlywiki/"+path+"/plugin.info.js";
     let script = document.createElement("script");
     script.src = !fallback ? cdn : local;
