@@ -49,22 +49,17 @@ The best way to do this is probably to add a plugin to the plugins directory in 
 But if you don't want to use a plugin or a relative data folder, you could use this code which first tries to load the CDN, then loads a local copy (in this case from TiddlyServer's tiddlywiki installation, which requires TiddlyServer 2.1.5). Place this code inside a script tag at the same place as before, then call the load function as shown at the bottom of the script. 
 
 ```js
+  //because this uses the server version number, it will always be identical to the fallback copy when using TiddlyServer
+  const VERSION = "`{{$:/core/templates/version}}`".replace(/\./gi, '-');
   $tw.boot.suppressBoot = true;
   let total = 0;
   let finished = 0;
-  const versiontags = {
-    "5-1-14": "tag1",
-    "5-1-15": "tag1",
-    "5-1-16": "tag1",
-    "5-1-17": "tag1",
-    "5-1-18": "tag1",
-    "5-1-19": "tag1",
-    "5-1-20": "tag1",
-    "5-1-21": "tag1",
-  }
   function load(version, path, integrity, fallback){
     total++;
-    let cdn = "https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-production@" + versiontags[version] + "/" + version + "/" + path + "/plugin.info.js";
+    //method1 is a branch that I (@arlen22) promise to not change the mechanism for
+    //so it will always have the same content and work the same way
+    //I will also try to add new TiddlyWiki versions to it as quickly as possible
+    let cdn = "https://cdn.jsdelivr.net/gh/arlen22/tiddlywiki5-production@method1/" + version + "/" + path + "/plugin.info.js";
     let local = "/assets/tiddlywiki/"+path+"/plugin.info.js";
     let script = document.createElement("script");
     script.src = !fallback ? cdn : local;
@@ -74,7 +69,7 @@ But if you don't want to use a plugin or a relative data folder, you could use t
     script.async = false;
     script.onerror = (err) => {
       total--;
-      load(path, integrity, true);
+      if(!fallback) load(version, path, integrity, true);
     };
     script.onload = () => { 
       finished++;
@@ -82,7 +77,7 @@ But if you don't want to use a plugin or a relative data folder, you could use t
     };
     document.body.appendChild(script);
   }
-  load("5-1-21", "core", "sha384-MdnVYpi2jlSv/mUd78TasT0daGWtBxxBKC3BIi21dC59nAoPHVK86ujlM6BhyOrt", false);
+  load(VERSION, "core", "sha384-MdnVYpi2jlSv/mUd78TasT0daGWtBxxBKC3BIi21dC59nAoPHVK86ujlM6BhyOrt", false);
 ```
  
 Honestly, now that I've written this out, I'm probably going to use a relative data folder to do this. I use Dropbox to sync some of my files, and since Dropbox keeps the same directory structure on every device, I can just put my installation specific data folder beside my Dropbox folder and use a relative link `"includeWikis": [{ "path": "../../somewhere/cdntemplate", "read-only": true }]`. If I still want to use a plugin I can just use a datafolder plugin in the cdntemplate folder.
