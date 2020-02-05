@@ -5,3 +5,4 @@
 /master/*
 /twits-5-1-17/*
 .DS_Store
+node_modules

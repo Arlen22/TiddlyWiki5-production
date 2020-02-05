@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+require("source-map-support/register");
+
 /*
 This is invoked as a shell script by NPM when the `tiddlywiki` command is typed
 */

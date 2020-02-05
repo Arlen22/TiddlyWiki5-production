@@ -8,7 +8,14 @@ On the server this file is executed directly to boot TiddlyWiki. In the browser,
 
 \*/
 
-var _boot = (function($tw) {
+ var _boot = (
+/** 
+ * @param { Object } $tw 
+ * @param { Object } $tw.debug
+ * @param { Record<string, string> } $tw.debug.pluginFolderPaths
+ * @param { Record<string, Record<string, string>> } $tw.debug.pluginTiddlerPaths
+ */
+function($tw) {
 
 /*jslint node: true, browser: true */
 /*global modules: false, $tw: false */
@@ -20,6 +27,10 @@ if(!$tw) {
 }
 
 $tw.utils = $tw.utils || Object.create(null);
+
+$tw.debug = $tw.debug || Object.create(null);
+$tw.debug.pluginFolderPaths = {};
+$tw.debug.pluginTiddlerPaths = {};
 
 /////////////////////////// Standard node.js libraries
 
@@ -486,6 +497,13 @@ $tw.utils.getTypeEncoding = function(ext) {
 	return typeInfo ? typeInfo.encoding : "utf8";
 };
 
+$tw.utils.evalFilename = function(filename){
+	var source = $tw.wiki.getShadowSource(filename);
+	var filepath = $tw.debug.pluginTiddlerPaths[source][filename];
+	//return the filepath or the filename if the path doesn't exist
+	return filepath || filename;
+}
+
 /*
 Run code globally with specified context variables in scope
 */
@@ -504,7 +522,7 @@ $tw.utils.evalGlobal = function(code,context,filename) {
 	if($tw.browser) {
 		fn = window["eval"](code + "\n\n//# sourceURL=" + filename);
 	} else {
-		fn = vm.runInThisContext(code,filename);
+		fn = vm.runInThisContext(code,$tw.utils.evalFilename(filename));
 	}
 	// Call the function and return the exports
 	return fn.apply(null,contextValues);
@@ -513,9 +531,9 @@ $tw.utils.evalGlobal = function(code,context,filename) {
 /*
 Run code in a sandbox with only the specified context variables in scope
 */
-$tw.utils.evalSandboxed = $tw.browser ? $tw.utils.evalGlobal : function(code,context,filename) {
+$tw.utils.evalSandboxed = true ? $tw.utils.evalGlobal : function(code,context,filename) {
 	var sandbox = $tw.utils.extend(Object.create(null),context);
-	vm.runInNewContext(code,sandbox,filename);
+	vm.runInNewContext(code,sandbox,$tw.utils.evalFilename(filename));
 	return sandbox.exports;
 };
 
@@ -1891,6 +1909,8 @@ $tw.loadPluginFolder = function(filepath,excludeRegExp) {
 		var pluginInfo = JSON.parse(fs.readFileSync(infoPath,"utf8"));
 		// Read the plugin files
 		var pluginFiles = $tw.loadTiddlersFromPath(filepath,excludeRegExp);
+		$tw.debug.pluginFolderPaths[pluginInfo.title] = filepath;
+		$tw.debug.pluginTiddlerPaths[pluginInfo.title] = {};
 		// Save the plugin tiddlers into the plugin info
 		pluginInfo.tiddlers = pluginInfo.tiddlers || Object.create(null);
 		for(var f=0; f<pluginFiles.length; f++) {
@@ -1899,6 +1919,7 @@ $tw.loadPluginFolder = function(filepath,excludeRegExp) {
 				var tiddler= tiddlers[t];
 				if(tiddler.title) {
 					pluginInfo.tiddlers[tiddler.title] = tiddler;
+					$tw.debug.pluginTiddlerPaths[pluginInfo.title][tiddler.title] = pluginFiles[f].filepath;
 				}
 			}
 		}

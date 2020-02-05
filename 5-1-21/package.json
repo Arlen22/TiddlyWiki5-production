@@ -1,6 +1,6 @@
 {
-  "name": "tiddlywiki",
-  "preferGlobal": "true",
+  "name": "@arlen22/tiddlywiki5-production",
+  "preferGlobal": true,
   "version": "5.1.21",
   "author": "Jeremy Ruston <jeremy@jermolene.com>",
   "description": "a non-linear personal web notebook",
@@ -8,6 +8,10 @@
     {
       "name": "Jeremy Ruston",
       "email": "jeremy@jermolene.com"
+    },
+    {
+      "name": "Arlen Beiler",
+      "email": "arlenbee@gmail.com"
     }
   ],
   "bin": {
@@ -16,14 +20,21 @@
   "main": "./boot/boot.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jermolene/TiddlyWiki5.git"
+    "url": "https://github.com/Arlen22/TiddlyWiki5-production.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [
     "tiddlywiki",
     "tiddlywiki5",
     "wiki"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "pouchdb": "^7.1.1",
+    "pouchdb-adapter-node-websql": "^7.0.0",
+    "source-map-support": "^0.5.16"
+  },
   "devDependencies": {},
   "bundleDependencies": [],
   "license": "BSD",
