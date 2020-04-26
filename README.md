@@ -1,4 +1,4 @@
-# TiddlyWiki5-production
+# TiddlyWiki-production
 
 Note: You should use NPM instead of GitHub. This page has been updated accordingly.
 
