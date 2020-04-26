@@ -74,4 +74,4 @@ But if you don't want to use a plugin or a relative data folder, you could use t
   load(VERSION, "core", "sha384-v2ATJoBoWYtacxqOP/48JGPSwGq4tlJPNOZ2EbtMN83UpOKIxF6E4nRTLQ2ckmcb", false);
 ```
  
-Honestly, now that I've written this out, I'm probably going to use a relative data folder to do this. I use Dropbox to sync some of my files, and since Dropbox keeps the same directory structure on every device, I can just put my installation specific data folder beside my Dropbox folder and use a relative link `"includeWikis": [{ "path": "../../somewhere/cdntemplate", "read-only": true }]`. If I still want to use a plugin I can just use a datafolder plugin in the cdntemplate folder.
+Honestly, now that I've written this out, I'm probably going to use a relative data folder to do this. I use Dropbox to sync some of my files, and since Dropbox keeps the same directory structure on every device, I can just put my installation specific data folder beside my Dropbox folder and use a relative link `"includeWikis": [{ "path": "../../besideDropbox/cdntemplate", "read-only": true }]`. If I still want to use a plugin I can put a plugin in the `cdntemplate/plugins` folder.
