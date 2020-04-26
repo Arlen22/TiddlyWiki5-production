@@ -42,11 +42,11 @@ The best way to do this is probably to add a plugin to the plugins directory in 
 
 But if you don't want to use a plugin or a relative data folder, you could use this code which first tries to load the CDN, then loads a local copy (in this case from TiddlyServer's tiddlywiki installation, which requires TiddlyServer 2.1.5). Place this code inside a script tag at the same place as before, then call the load function as shown at the bottom of the script. 
 
-This code would be inserted into `$:/core/templates/tiddlywiki5.html` in a data folder. If you insert this into a single-file wiki, you would need to replace the VERSION variable with the TiddlyWiki version string. In this case it would be `"5.1.22"`. 
+This code would be inserted into one of several tiddlers in `$:/core/templates/`. 
 
 ```js
   //because this uses the server version number, it will always be identical to the fallback
-  const VERSION = "`{{$:/core/templates/version}}`".replace(/\./gi, '-');
+  const VERSION = "`{{$:/core/templates/version}}`";
   $tw.boot.suppressBoot = true;
   let total = 0;
   let finished = 0;
