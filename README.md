@@ -2,7 +2,7 @@
 
 Note: You should use NPM instead of GitHub. This page has been updated accordingly.
 
-I am using compile-plugins.sh as my compile script. As you can see by the last line, it does everything from start to finish. 
+I am using compile-tiddlywiki-production.sh as my compile script. As you can see by the last line, it does everything from start to finish. 
 
 The way this works is really simple. It's powered by jsdelivr.net. Using NPM version numbers we can distribute the file hashes for each file and guarentee with certainty that the file will never change. 
 
