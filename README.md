@@ -1,6 +1,6 @@
 # TiddlyWiki5-production
 
-Don't use this GitHub repo anymore. I've published this to npm so it can now be retrieved from there. NPM is preferable to this. The file structure is still the same. All the links below are modified to use NPM.
+Note: You should use NPM instead of GitHub. This page has been updated accordingly.
 
 The way this works is really simple. It's powered by jsdelivr.net. Using NPM version numbers we can distribute the file hashes for each file and guarentee with certainty that the file will never change. 
 
