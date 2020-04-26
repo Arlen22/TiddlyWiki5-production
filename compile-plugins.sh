@@ -8,7 +8,7 @@ rm -rf $SOURCE
 git clone https://github.com/Jermolene/TiddlyWiki5 $SOURCE
 (cd TiddlyWiki5-Jermolene && git checkout tags/v$VERSION)
 
-node ./compile-plugins.js $SOURCE $TARGET $VERSION
+node ./compile-tiddlywiki-production.js $SOURCE $TARGET $VERSION
 cp -vR $SOURCE/tiddlywiki.js $SOURCE/license $SOURCE/licenses $SOURCE/boot $TARGET
 zip -rq $TARGET/editions.zip $SOURCE/editions $SOURCE/bin
 
