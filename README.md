@@ -2,6 +2,8 @@
 
 Note: You should use NPM instead of GitHub. This page has been updated accordingly.
 
+I am using compile-plugins.sh as my compile script. As you can see by the last line, it does everything from start to finish. 
+
 The way this works is really simple. It's powered by jsdelivr.net. Using NPM version numbers we can distribute the file hashes for each file and guarentee with certainty that the file will never change. 
 
 https://cdn.jsdelivr.net/npm/tiddlywiki-production@5.1.22/core/plugin.info.js
