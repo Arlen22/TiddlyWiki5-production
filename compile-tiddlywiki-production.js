@@ -5,17 +5,21 @@ const cp = require("child_process");
 //compiles plugins as JSON header plus plain text body
 
 
-if (!process.argv[2] || !process.argv[3] || !process.argv[4])
-	throw "Please specify source, destination, and version";
+if (!process.argv[2] || !process.argv[3] || !process.argv[4] || !process.argv[5])
+	throw "Please specify source, destination, version, and type";
 
 const oldFolder = path.resolve(process.argv[2]);
 const newFolder = path.resolve(process.argv[3]);
 
 const pkg = require(path.resolve(oldFolder, "package.json"));
 
+const type = process.argv[5];
+
+if(["client", "server", "both"].indexOf(type) === -1)
+	throw "the fourth argument must be 'client', 'server', or 'both'";
+
 if (pkg.version !== process.argv[4])
 	throw "Mismatch with package.json version";
-
 
 fs.mkdirSync(newFolder);
 var $tw = require(oldFolder).TiddlyWiki();
@@ -46,18 +50,17 @@ function complete() {
 				if (!fs.existsSync(curPath)) fs.mkdirSync(curPath);
 			}
 			if (plugin) {
-				// let js = JSON.stringify(plugin);
-				//re-stringify to reformat and save space
 				plugin.text = JSON.stringify(JSON.parse(plugin.text));
-				let js = Buffer.from(`$tw.preloadTiddler(${JSON.stringify(plugin)});`, "utf8");
-				let hash = crypto.createHash("sha384").update(js).digest("base64");
-				// console.log(newPath, hash);
-				fs.writeFileSync(path.join(newPath, "plugin.info.js"), js);
-				hashes[relPath] = "sha384-" + hash;
-
-				plugin.tiddlers = JSON.parse(plugin.text).tiddlers;
-				delete plugin.text;
-				fs.writeFileSync(path.join(newPath, "plugin.info"), JSON.stringify(plugin));
+				if(type === "server"){
+					plugin.tiddlers = JSON.parse(plugin.text).tiddlers;
+					delete plugin.text;
+					fs.writeFileSync(path.join(newPath, "plugin.info"), JSON.stringify(plugin));
+				} else if (type === "client"){
+					let js = Buffer.from(`$tw.preloadTiddler(${JSON.stringify(plugin)});`, "utf8");
+					let hash = crypto.createHash("sha384").update(js).digest("base64");
+					fs.writeFileSync(path.join(newPath, "plugin.info.js"), js);
+					hashes[relPath] = "sha384-" + hash;
+				}
 			} else console.log(oldPath);
 		});
 	// console.log(hashes);
@@ -74,7 +77,7 @@ function complete() {
 	// add package.json with a few changes
 	/** @type {import("./TiddlyWiki5-Jermolene/package.json")} */
 	let pkg = JSON.parse(fs.readFileSync(path.join(oldFolder, "package.json"), "utf8"));
-	pkg.name += "-production";
+	pkg.name += "-production-" + type;
 	pkg.preferGlobal = false;
 	fs.writeFileSync(path.join(newFolder, "package.json"), JSON.stringify(pkg, null, 2));
 
