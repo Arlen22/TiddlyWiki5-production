@@ -1,28 +1,29 @@
 # TiddlyWiki-production
 
-Note: You should use NPM instead of GitHub. This page has been updated accordingly.
-
-I am using compile-tiddlywiki-production.sh as my compile script. As you can see by the last line, it does everything from start to finish. 
+- `compile-tiddlywiki-production.sh` is my compile script. As you can see by the last line, it does everything from start to finish. 
+- This project has been switched to using NPM. I also needed to separate the server and client files because the client `plugin.info.js` file was being imported as a shadow tiddler. 
+  - `tiddlywiki-production-server` - This one is the original for loading datafolders in production.
+  - `tiddlywiki-production-client` - This one has the `plugin.info.js` files explained below. 
 
 The way this works is really simple. It's powered by jsdelivr.net. Using NPM version numbers we can distribute the file hashes for each file and guarentee with certainty that the file will never change. 
 
-https://cdn.jsdelivr.net/npm/tiddlywiki-production@5.1.22/core/plugin.info.js
+https://cdn.jsdelivr.net/npm/tiddlywiki-production-client@5.1.22/core/plugin.info.js
 
 Don't use the jsDelivr .min.js file because then you cannot use the HTML integrity check in your files because dynamically generated minified versions can potentially change in their formatting, depending on which minifier is used, which would change the integrity check. The files are always served using gzip encoding if the browser supports it and this decreases the file size much more than minification could anyway. So don't use minification, just depend on jsDelivr serving the files using gzip. 
 
 The integrity check for the `plugin.info.js` files in each bundle can be found in the hashes.json file:
 
-https://cdn.jsdelivr.net/npm/tiddlywiki-production@5.1.22/hashes.json
+https://cdn.jsdelivr.net/npm/tiddlywiki-production-client@5.1.22/hashes.json
 
 To use the bundle scripts you insert the following HTML betweeen the `boot-prefix.js` script tag and the `boot.js` script tag at the end of the TiddlyWiki file. You should be able to find the correct place by searching for the string `<!--~~ Boot kernel ~~-->`.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/tiddlywiki-production@5.1.22/core/plugin.info.js" 
+<script src="https://cdn.jsdelivr.net/npm/tiddlywiki-production-client@5.1.22/core/plugin.info.js" 
         integrity="sha384-v2ATJoBoWYtacxqOP/48JGPSwGq4tlJPNOZ2EbtMN83UpOKIxF6E4nRTLQ2ckmcb"
         crossorigin></script>
 ```
 
-The src attribute is the full url of the file you want to load externally and the integrity attribute is the corrosponding hash from the corresponding hash file (in this case `/tiddlywiki-production@5.1.22/hashes.json`). The plugin.info.js file is literally just `$tw.preloadTiddler(/* plugin tiddler */);` The crossorigin tag is good to include as shown. It basically tells the browser that it's a CDN resource. 
+The src attribute is the full url of the file you want to load externally and the integrity attribute is the corrosponding hash from the corresponding hash file (in this case `/tiddlywiki-production-client@5.1.22/hashes.json`). The plugin.info.js file is literally just `$tw.preloadTiddler(/* plugin tiddler */);` The crossorigin tag is good to include as shown. It basically tells the browser that it's a CDN resource. 
 
 
 You can use the following wikitext to download a copy of your wiki minus the plugins you want to pull from the CDN (in this example, only `$:/core`). Be sure to include the minus sign in front of each tiddler you want to exclude. This assumes `$:/config/SaveWikiButton/Template` is set to `$:/core/save/all`. 
@@ -54,7 +55,7 @@ This code would be inserted into one of several tiddlers in `$:/core/templates/`
   let finished = 0;
   function load(version, path, integrity, fallback){
     total++;
-    let cdn = "https://cdn.jsdelivr.net/npm/tiddlywiki-production@" + version + "/" + path + "/plugin.info.js";
+    let cdn = "https://cdn.jsdelivr.net/npm/tiddlywiki-production-client@" + version + "/" + path + "/plugin.info.js";
     // this is the path tiddlyserver serves the target tiddlywiki from
     let local = "/assets/tiddlywiki/"+path+"/plugin.info.js";
     let script = document.createElement("script");
