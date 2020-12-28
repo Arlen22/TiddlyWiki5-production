@@ -1,15 +1,17 @@
 # TiddlyWiki-production
 
+https://github.com/Arlen22/TiddlyWiki5-production
+
 - `compile-tiddlywiki-production.sh` is my compile script. As you can see by the last line, it does everything from start to finish. 
 - This project has been switched to using NPM. I also needed to separate the server and client files because the client `plugin.info.js` file was being imported as a shadow tiddler. 
-  - `tiddlywiki-production-server` - This one is the original for loading datafolders in production.
-  - `tiddlywiki-production-client` - This one has the `plugin.info.js` files explained below. 
+  - `tiddlywiki-production-server` - Installed as a dependancy or globally and functions identical to `tiddlywiki`. 
+  - `tiddlywiki-production-client` - Contains the `plugin.info.js` files explained below.
 
 The way this works is really simple. It's powered by jsdelivr.net. Using NPM version numbers we can distribute the file hashes for each file and guarentee with certainty that the file will never change. 
 
 https://cdn.jsdelivr.net/npm/tiddlywiki-production-client@5.1.22/core/plugin.info.js
 
-Don't use the jsDelivr .min.js file because then you cannot use the HTML integrity check in your files because dynamically generated minified versions can potentially change in their formatting, depending on which minifier is used, which would change the integrity check. The files are always served using gzip encoding if the browser supports it and this decreases the file size much more than minification could anyway. So don't use minification, just depend on jsDelivr serving the files using gzip. 
+> Don't use the jsDelivr minified files as it will change the integrity hash. The files are always served using gzip encoding if the browser supports it and this decreases the file size much more than minification could anyway. So don't use minification, just depend on jsDelivr serving the files using gzip. 
 
 The integrity check for the `plugin.info.js` files in each bundle can be found in the hashes.json file:
 
@@ -25,7 +27,6 @@ To use the bundle scripts you insert the following HTML betweeen the `boot-prefi
 
 The src attribute is the full url of the file you want to load externally and the integrity attribute is the corrosponding hash from the corresponding hash file (in this case `/tiddlywiki-production-client@5.1.22/hashes.json`). The plugin.info.js file is literally just `$tw.preloadTiddler(/* plugin tiddler */);` The crossorigin tag is good to include as shown. It basically tells the browser that it's a CDN resource. 
 
-
 You can use the following wikitext to download a copy of your wiki minus the plugins you want to pull from the CDN (in this example, only `$:/core`). Be sure to include the minus sign in front of each tiddler you want to exclude. This assumes `$:/config/SaveWikiButton/Template` is set to `$:/core/save/all`. 
 
 ```plain
@@ -35,6 +36,8 @@ You can use the following wikitext to download a copy of your wiki minus the plu
 </$set>
 ```
 
+The plugin.info.js file adds the plugin tiddler to the `$tw.preloadTiddlers` array which is created by `bootprefix.js`. 
+
 ## Serving fallback resources
 
 ### This is rather technical
@@ -43,7 +46,7 @@ In the case of TiddlyServer or other solutions which run on your computer, it ma
 
 The best way to do this is probably to add a plugin to the plugins directory in each TiddlyWiki installation which would modify the required templates accordingly, but you could also include a data folder containing the templates outside of the synchronised folder structure, but at the same relative path containing the modified plugins. 
 
-But if you don't want to use a plugin or a relative data folder, you could use this code which first tries to load the CDN, then loads a local copy (in this case from TiddlyServer's tiddlywiki installation, which requires TiddlyServer 2.1.5). Place this code inside a script tag at the same place as before, then call the load function as shown at the bottom of the script. 
+But if you don't want to use a plugin or a relative data folder, you could use this code which first tries to load the CDN, then loads a local copy (in this case from TiddlyServer's tiddlywiki installation, which requires TiddlyServer). Place this code inside a script tag at the same place as before, then call the load function as shown at the bottom of the script. 
 
 This code would be inserted into one of several tiddlers in `$:/core/templates/`. 
 
