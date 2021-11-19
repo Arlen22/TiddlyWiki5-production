@@ -64,8 +64,9 @@ function complete() {
 			} else console.log(oldPath);
 		});
 	// console.log(hashes);
-	fs.writeFileSync(path.join(newFolder, "hashes.json"), JSON.stringify(hashes, null, 2));
-
+	if(type === "client") {
+		fs.writeFileSync(path.join(newFolder,"hashes.json"),JSON.stringify(hashes,null,2));
+	}
 	// fs.mkdirSync(path.join(newFolder, 'bin'));
 	// fs.mkdirSync(path.join(newFolder, 'boot'));
 	// fs.mkdirSync(path.join(newFolder, 'licenses'));
