@@ -1,6 +1,7 @@
+#!/bin/bash
 SOURCE="TiddlyWiki5-Jermolene"
-TARGET="5-1-23"
-VERSION="5.1.23"
+TARGET="5-2-1"
+VERSION="5.2.1"
 
 ([ -d "$TARGET-client" ] || [ -d "$TARGET-server" ]) && echo "Output folder already exists" && exit 1
 
