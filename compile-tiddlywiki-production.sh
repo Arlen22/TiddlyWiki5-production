@@ -1,7 +1,11 @@
 #!/bin/bash
+# INSTRUCTIONS
+# Below: Change target and version as desired 
+# In WSL: verify NPM whoami then run this file IN WSL
+# *** THE NEW BUILD WILL BE PUBLISHED ***
 SOURCE="TiddlyWiki5-Jermolene"
-TARGET="5-2-1"
-VERSION="5.2.1"
+TARGET="5-2-2"
+VERSION="5.2.2"
 
 ([ -d "$TARGET-client" ] || [ -d "$TARGET-server" ]) && echo "Output folder already exists" && exit 1
 
@@ -23,4 +27,5 @@ cp -v README.md $TARGET-client
 
 echo "The 'bin' and 'editions' folders are not required for TiddlyWiki to work correctly as a module. They are both included in a zip file."
 
-# (cd 5-1-22-server && npm publish) && (cd 5-1-22-client && npm publish)
+# TARGET="5-2-2" (cd $TARGET-server && npm publish) && (cd $TARGET-client && npm publish)
+(cd $TARGET-server && npm publish) && (cd $TARGET-client && npm publish)
